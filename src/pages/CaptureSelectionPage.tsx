@@ -65,7 +65,8 @@ const CaptureSelectionScreen = () => {
     if (result.canceled) {
       console.log("User cancelled camera picker");
     } else if (result.assets && result.assets[0].uri) {
-      navigation.navigate("Result", {
+      // 이미지를 선택한 후 BoardWritingScreen으로 이동
+      navigation.navigate("BoardWriting", {
         imageUri: result.assets[0].uri,
         boardData,
       });
@@ -91,7 +92,8 @@ const CaptureSelectionScreen = () => {
     if (result.canceled) {
       console.log("User cancelled gallery picker");
     } else if (result.assets && result.assets[0].uri) {
-      navigation.navigate("Result", {
+      // 이미지를 선택한 후 BoardWritingScreen으로 이동
+      navigation.navigate("BoardWriting", {
         imageUri: result.assets[0].uri,
         boardData,
       });

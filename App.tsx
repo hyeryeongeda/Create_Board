@@ -2,11 +2,11 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "./src/screens/HomeScreen";
-import SettingsScreen from "./src/screens/SettingsScreen";
-import CaptureSelectionScreen from "./src/screens/CaptureSelectionScreen";
-import BoardWritingScreen from "./src/screens/BoardWritingScreen";
-import ResultScreen from "./src/screens/ResultScreen";
+import HomeScreen from "./src/pages/HomePage";
+import SettingsScreen from "./src/pages/SettingsPage";
+import CaptureSelectionScreen from "./src/pages/CaptureSelectionPage";
+import BoardWritingScreen from "./src/pages/BoardWritingPage";
+import ResultScreen from "./src/pages/ResultPage";
 import { RootStackParamList } from "./src/types/navigation";
 
 const Stack = createStackNavigator<RootStackParamList>();

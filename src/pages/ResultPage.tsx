@@ -25,6 +25,20 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
 
+  // 권한 요청 코드 추가
+  useEffect(() => {
+    const requestPermission = async () => {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "권한 필요",
+          "갤러리에 이미지를 저장하려면 권한이 필요합니다."
+        );
+      }
+    };
+    requestPermission();
+  }, []);
+
   useEffect(() => {
     Image.getSize(imageUri, (width, height) => {
       const screenWidth = Dimensions.get("window").width;
@@ -36,7 +50,8 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
   }, [imageUri]);
 
   const saveImageToGallery = async () => {
-    if (viewRef.current) {
+    if (viewRef.current && viewRef.current.capture) {
+      // viewRef.current와 capture가 정의되어 있는지 확인
       try {
         const uri = await viewRef.current.capture();
         if (uri) {

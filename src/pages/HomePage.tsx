@@ -8,7 +8,7 @@ import styles from "../styles/HomeStyles";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-const HomeScreen = () => {
+const Home = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleSettingsPress = () => {
@@ -50,4 +50,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;

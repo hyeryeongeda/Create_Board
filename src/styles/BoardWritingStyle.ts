@@ -1,25 +1,33 @@
-// src/styles/BoardWritingStyle.ts
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 20,
+    padding: 16,
     backgroundColor: "#fff",
   },
-  input: {
+  fieldContainer: {
+    marginBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
-    marginBottom: 16,
-    padding: 8,
+    paddingBottom: 8,
+  },
+  labelInput: {
     fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  valueInput: {
+    fontSize: 16,
+    color: "#000",
+    marginTop: 4,
   },
   button: {
     backgroundColor: "#006994",
-    padding: 15,
-    borderRadius: 5,
+    padding: 12,
     alignItems: "center",
-    marginTop: 20,
+    borderRadius: 4,
+    marginTop: 16,
   },
   buttonText: {
     color: "#fff",
