@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  ScrollView,
   Dimensions,
 } from "react-native";
 import * as MediaLibrary from "expo-media-library";
@@ -13,6 +12,7 @@ import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigation";
 import ViewShot from "react-native-view-shot";
 import styles from "../styles/ResultStyle";
+import BoardOverlay from "../components/BoardOverlay"; // BoardOverlay 컴포넌트 임포트
 
 type ResultScreenProps = {
   route: RouteProp<RootStackParamList, "Result">;
@@ -25,7 +25,6 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
 
-  // 권한 요청 코드 추가
   useEffect(() => {
     const requestPermission = async () => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -51,7 +50,6 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
 
   const saveImageToGallery = async () => {
     if (viewRef.current && viewRef.current.capture) {
-      // viewRef.current와 capture가 정의되어 있는지 확인
       try {
         const uri = await viewRef.current.capture();
         if (uri) {
@@ -70,23 +68,22 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
-      style={{ flex: 1 }}
-    >
+    <View style={styles.container}>
+      {/* ViewShot을 이미지와 보드판을 감싸는 컨테이너로 설정 */}
       <ViewShot ref={viewRef} options={{ format: "png", quality: 0.9 }}>
         <View style={styles.imageContainer}>
           <Image
             source={{ uri: imageUri }}
-            style={{ width: imageWidth, height: imageHeight }}
-            resizeMode="contain"
+            style={[styles.image, { width: imageWidth, height: imageHeight }]}
           />
-          <View style={[styles.overlay, { bottom: imageHeight * 0.05 }]}>
-            <Text style={styles.text}>용역명: {boardData.title}</Text>
-            <Text style={styles.text}>공종: {boardData.projectType}</Text>
-            <Text style={styles.text}>위치: {boardData.location}</Text>
-            <Text style={styles.text}>내용: {boardData.content}</Text>
+          <View style={styles.overlayContainer}>
+            <BoardOverlay
+              title={boardData.title}
+              projectType={boardData.projectType}
+              location={boardData.location}
+              content={boardData.content}
+              date={boardData.date}
+            />
           </View>
         </View>
       </ViewShot>
@@ -94,7 +91,7 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
       <TouchableOpacity onPress={saveImageToGallery} style={styles.saveButton}>
         <Text style={styles.saveButtonText}>갤러리에 저장</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 

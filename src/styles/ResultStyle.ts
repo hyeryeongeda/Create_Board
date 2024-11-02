@@ -1,40 +1,41 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1, // ScrollView의 컨텐츠가 가득 차도록 설정
-    justifyContent: "flex-start",
+  container: {
+    flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff", // 배경색 설정 (필요에 따라 조정 가능)
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
   imageContainer: {
-    marginTop: 150,
+    position: "relative",
+    width: screenWidth,
+    height: screenWidth, // 화면 너비와 동일한 높이로 설정
   },
   image: {
-    width: "100%", // 전체 너비
-    height: "auto", // 세로 길이를 자동으로 조정
-    aspectRatio: 1, // 이미지 비율을 유지 (optional)
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
-  overlay: {
-    position: "absolute", // 절대 위치 설정
-    bottom: 0, // 하단에 위치
-    left: 0, // 왼쪽에 위치
-    backgroundColor: "white",
-    padding: 10,
-    width: "80%", // 너비를 적절히 설정
-  },
-  text: {
-    fontSize: 16,
-    color: "#000",
+  overlayContainer: {
+    position: "absolute",
+    bottom: 5, // 이미지 하단에서 약간 위로 설정
+    left: 5, // 왼쪽에 고정된 위치로 설정
+    width: "55%", // 너비를 적절히 조정하여 이미지 왼쪽 하단에 위치
   },
   saveButton: {
     marginTop: 20,
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     backgroundColor: "#006994",
     borderRadius: 5,
   },
   saveButtonText: {
     color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
