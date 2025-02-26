@@ -1,6 +1,6 @@
 // src/screens/HomeScreen.tsx
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
@@ -11,41 +11,81 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 const Home = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const handleSettingsPress = () => {
-    navigation.navigate("Settings");
-  };
-
-  const handleCaptureBoardPress = () => {
-    navigation.navigate("CaptureSelection", {
-      boardData: {
-        title: "",
-        projectType: "",
-        location: "",
-        content: "",
-        date: "",
-      }, // 초기값 설정
-      imageUri: "", // 초기값 설정 (선택된 이미지가 없을 경우)
-    });
-  };
+  const menuItems = [
+    {
+      id: "photo",
+      title: "사진",
+      onPress: () =>
+        navigation.navigate("CaptureSelection", {
+          boardData: {
+            title: "",
+            projectType: "",
+            location: "",
+            content: "",
+            date: "",
+          },
+          imageUri: "",
+        }),
+    },
+    {
+      id: "camera",
+      title: "카메라",
+      onPress: () =>
+        navigation.navigate("CaptureSelection", {
+          boardData: {
+            title: "",
+            projectType: "",
+            location: "",
+            content: "",
+            date: "",
+          },
+          imageUri: "",
+        }),
+    },
+    {
+      id: "pdf",
+      title: "pdf\n변환",
+      onPress: () => navigation.navigate("Settings"),
+    },
+    {
+      id: "method",
+      title: "촬영\n방법",
+      onPress: () => navigation.navigate("Settings"),
+    },
+    {
+      id: "board",
+      title: "보드판\n설정",
+      onPress: () => navigation.navigate("Settings"),
+    },
+    {
+      id: "settings",
+      title: "설정",
+      onPress: () => navigation.navigate("Settings"),
+    },
+  ];
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleSettingsPress}
-      >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>설정</Text>
+      <View style={styles.logoContainer}>
+        <View style={styles.logoCircle}>
+          <Text style={styles.logoText}>CB</Text>
         </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={handleCaptureBoardPress}
-      >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>보드판 촬영</Text>
-        </View>
-      </TouchableOpacity>
+        <Text style={styles.title}>공사 보드판 만들기</Text>
+      </View>
+
+      <View style={styles.gridContainer}>
+        {menuItems.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.gridItem}
+            onPress={item.onPress}
+          >
+            <View style={styles.gridItemInner}>
+              <Text style={styles.gridItemText}>{item.title}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 };

@@ -1,36 +1,27 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-const screenWidth = Dimensions.get("window").width;
-
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#fff",
   },
   imageContainer: {
     position: "relative",
-    width: screenWidth,
-    height: screenWidth, // 화면 너비와 동일한 높이로 설정
   },
   image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
   overlayContainer: {
-    position: "absolute",
-    bottom: 5, // 이미지 하단에서 약간 위로 설정
-    left: 5, // 왼쪽에 고정된 위치로 설정
-    width: "55%", // 너비를 적절히 조정하여 이미지 왼쪽 하단에 위치
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    borderRadius: 8,
+    padding: 10,
   },
   saveButton: {
-    marginTop: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    backgroundColor: "#006994",
-    borderRadius: 5,
+    backgroundColor: "#007AFF",
+    padding: 15,
+    borderRadius: 8,
+    margin: 20,
+    alignItems: "center",
   },
   saveButtonText: {
     color: "#fff",
@@ -38,5 +29,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-export default styles;

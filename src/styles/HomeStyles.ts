@@ -4,24 +4,53 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  logoContainer: {
+    alignItems: "center",
+    marginVertical: 30,
+  },
+  logoCircle: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: "#1a237e",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f0f0", // 배경색 추가
+    marginBottom: 15,
   },
-  buttonContainer: {
-    width: 200, // 버튼 너비 설정
-    marginVertical: 10, // 위아래로 10px 간격
-  },
-  button: {
-    backgroundColor: "#006994", // 버튼 색상
-    paddingVertical: 15, // 버튼의 세로 패딩
-    borderRadius: 5, // 네모난 버튼 모서리 둥글기
-    alignItems: "center",
-  },
-  buttonText: {
+  logoText: {
     color: "#fff",
-    fontSize: 30,
+    fontSize: 48,
     fontWeight: "bold",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 30,
+  },
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  gridItem: {
+    width: "30%",
+    aspectRatio: 1,
+    marginBottom: 20,
+  },
+  gridItemInner: {
+    flex: 1,
+    backgroundColor: "#f0f0f0",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  gridItemText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
   },
 });
 

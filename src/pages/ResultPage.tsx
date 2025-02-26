@@ -13,6 +13,8 @@ import { RootStackParamList } from "../types/navigation";
 import ViewShot from "react-native-view-shot";
 import styles from "../styles/ResultStyle";
 import BoardOverlay from "../components/BoardOverlay"; // BoardOverlay 컴포넌트 임포트
+import { BoardSettings } from "../types/settings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ResultScreenProps = {
   route: RouteProp<RootStackParamList, "Result">;
@@ -21,9 +23,32 @@ type ResultScreenProps = {
 const ResultScreen = ({ route }: ResultScreenProps) => {
   const { imageUri, boardData } = route.params;
   const viewRef = useRef<ViewShot | null>(null);
-
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
+  const [boardSettings, setBoardSettings] = useState<BoardSettings>({
+    width: 0.8,
+    height: 0.3,
+    position: {
+      x: 0.1,
+      y: 0.1,
+    },
+  });
+
+  // 설정 불러오기
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const savedSettings = await AsyncStorage.getItem("boardSettings");
+        if (savedSettings) {
+          setBoardSettings(JSON.parse(savedSettings));
+        }
+      } catch (error) {
+        console.error("설정 로드 실패:", error);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -76,7 +101,18 @@ const ResultScreen = ({ route }: ResultScreenProps) => {
             source={{ uri: imageUri }}
             style={[styles.image, { width: imageWidth, height: imageHeight }]}
           />
-          <View style={styles.overlayContainer}>
+          <View
+            style={[
+              styles.overlayContainer,
+              {
+                position: "absolute",
+                width: imageWidth * boardSettings.width,
+                height: imageHeight * boardSettings.height,
+                left: imageWidth * boardSettings.position.x,
+                top: imageHeight * boardSettings.position.y,
+              },
+            ]}
+          >
             <BoardOverlay
               title={boardData.title}
               projectType={boardData.projectType}

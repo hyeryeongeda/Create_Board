@@ -9,6 +9,7 @@ export type RootStackParamList = {
   CaptureSelection: { boardData: any; imageUri: string }; // CaptureSelection 화면은 boardData와 imageUri가 필요함
   BoardWriting: {
     boardData: {
+      [x: string]: string;
       title: string;
       projectType: string;
       location: string;

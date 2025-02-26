@@ -21,44 +21,63 @@ type Props = {
 const BoardWritingScreen = ({ navigation, route }: Props) => {
   const { imageUri, boardData } = route.params;
 
-  const [title, setTitle] = useState(boardData.title || "사건명");
-  const [titleValue, setTitleValue] = useState(boardData.title || "");
+  const [fields, setFields] = useState({
+    title: {
+      label: boardData.titleLabel || "사건명",
+      value: boardData.title || "",
+    },
+    projectType: {
+      label: boardData.projectTypeLabel || "공 종",
+      value: boardData.projectType || "",
+    },
+    location: {
+      label: boardData.locationLabel || "위치",
+      value: boardData.location || "",
+    },
+    content: {
+      label: boardData.contentLabel || "내용",
+      value: boardData.content || "",
+    },
+    date: {
+      label: boardData.dateLabel || "일자",
+      value: boardData.date || "",
+    },
+  });
 
-  const [projectType, setProjectType] = useState(
-    boardData.projectType || "공 종"
-  );
-  const [projectTypeValue, setProjectTypeValue] = useState(
-    boardData.projectType || ""
-  );
-
-  const [location, setLocation] = useState(boardData.location || "위치");
-  const [locationValue, setLocationValue] = useState(boardData.location || "");
-
-  const [content, setContent] = useState(boardData.content || "내용");
-  const [contentValue, setContentValue] = useState(boardData.content || "");
-
-  const [date, setDate] = useState("일자");
-  const [dateValue, setDateValue] = useState(boardData.date || "");
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const updateField = (
+    fieldName: string,
+    type: "label" | "value",
+    newText: string
+  ) => {
+    setFields((prev) => ({
+      ...prev,
+      [fieldName as keyof typeof prev]: {
+        ...prev[fieldName as keyof typeof prev],
+        [type]: newText,
+      },
+    }));
+  };
 
   const handleNext = () => {
     navigation.navigate("Result", {
       boardData: {
-        title: titleValue,
-        projectType: projectTypeValue,
-        location: locationValue,
-        content: contentValue,
-        date: dateValue,
+        title: fields.title.value,
+        projectType: fields.projectType.value,
+        location: fields.location.value,
+        content: fields.content.value,
+        date: fields.date.value,
       },
       imageUri,
     });
   };
 
   const onDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === "ios"); // iOS에서는 Picker가 계속 열리도록 설정
+    setShowDatePicker(Platform.OS === "ios");
     if (selectedDate) {
       const formattedDate = selectedDate.toISOString().split("T")[0];
-      setDateValue(formattedDate);
+      updateField("date", "value", formattedDate);
     }
   };
 
@@ -67,52 +86,52 @@ const BoardWritingScreen = ({ navigation, route }: Props) => {
       <View style={styles.fieldContainer}>
         <TextInput
           style={styles.labelInput}
-          value={title}
-          onChangeText={setTitle}
+          value={fields.title.label}
+          onChangeText={(text) => updateField("title", "label", text)}
         />
         <TextInput
           style={styles.valueInput}
-          value={titleValue}
-          onChangeText={setTitleValue}
+          value={fields.title.value}
+          onChangeText={(text) => updateField("title", "value", text)}
         />
       </View>
 
       <View style={styles.fieldContainer}>
         <TextInput
           style={styles.labelInput}
-          value={projectType}
-          onChangeText={setProjectType}
+          value={fields.projectType.label}
+          onChangeText={(text) => updateField("projectType", "label", text)}
         />
         <TextInput
           style={styles.valueInput}
-          value={projectTypeValue}
-          onChangeText={setProjectTypeValue}
+          value={fields.projectType.value}
+          onChangeText={(text) => updateField("projectType", "value", text)}
         />
       </View>
 
       <View style={styles.fieldContainer}>
         <TextInput
           style={styles.labelInput}
-          value={location}
-          onChangeText={setLocation}
+          value={fields.location.label}
+          onChangeText={(text) => updateField("location", "label", text)}
         />
         <TextInput
           style={styles.valueInput}
-          value={locationValue}
-          onChangeText={setLocationValue}
+          value={fields.location.value}
+          onChangeText={(text) => updateField("location", "value", text)}
         />
       </View>
 
       <View style={styles.fieldContainer}>
         <TextInput
           style={styles.labelInput}
-          value={content}
-          onChangeText={setContent}
+          value={fields.content.label}
+          onChangeText={(text) => updateField("content", "label", text)}
         />
         <TextInput
           style={styles.valueInput}
-          value={contentValue}
-          onChangeText={setContentValue}
+          value={fields.content.value}
+          onChangeText={(text) => updateField("content", "value", text)}
           multiline
         />
       </View>
@@ -120,12 +139,12 @@ const BoardWritingScreen = ({ navigation, route }: Props) => {
       <View style={styles.fieldContainer}>
         <TextInput
           style={styles.labelInput}
-          value={date}
-          onChangeText={setDate}
+          value={fields.date.label}
+          onChangeText={(text) => updateField("date", "label", text)}
         />
         <TouchableOpacity onPress={() => setShowDatePicker(true)}>
           <Text style={styles.valueInput}>
-            {dateValue || "날짜를 선택하세요"}
+            {fields.date.value || "날짜를 선택하세요"}
           </Text>
         </TouchableOpacity>
         {showDatePicker && (
